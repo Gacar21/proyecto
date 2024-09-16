@@ -3,6 +3,7 @@ package main;
 
 import graphics.Assets;
 import static graphics.Assets.init;
+import input.KeyBoard;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,6 +41,7 @@ public class Windows extends JFrame implements Runnable{
     private int AVERAGEFPS = FPS;
 
     private GameState gameState;
+    private KeyBoard keyBoard;
     
     public Windows()
     {
@@ -54,12 +56,15 @@ public class Windows extends JFrame implements Runnable{
 
 
         canvas = new Canvas();
+        keyBoard = new KeyBoard();
         canvas.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         canvas.setMaximumSize(new Dimension(WIDTH,HEIGHT));
         canvas.setMinimumSize(new Dimension(WIDTH,HEIGHT));
         //permite recibir entradas por parte del teclado
         canvas.setFocusable(true);
          add(canvas);
+         
+         canvas.addKeyListener(keyBoard);
           //hace visible la ventana
          setVisible(true);
     }
@@ -70,8 +75,10 @@ public class Windows extends JFrame implements Runnable{
 
     }
     //movimiento de nuestro dibujo
-    int x = 0;
+    //int x = 0;
+    
     private void update(){
+        keyBoard.update();
         gameState.update();
     }
 
