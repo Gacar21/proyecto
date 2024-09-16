@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import states.GameState;
 
 // extends JFrame (para abrir una ventana
 // public static con width y height tamaño de ventanas
@@ -38,6 +39,8 @@ public class Windows extends JFrame implements Runnable{
     //nos permite saber a cuantos fps correa actualmente
     private int AVERAGEFPS = FPS;
 
+    private GameState gameState;
+    
     public Windows()
     {
         setTitle("Juego espacial");
@@ -69,7 +72,7 @@ public class Windows extends JFrame implements Runnable{
     //movimiento de nuestro dibujo
     int x = 0;
     private void update(){
-
+        gameState.update();
     }
 
     private void draw(){
@@ -85,9 +88,9 @@ public class Windows extends JFrame implements Runnable{
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-
-        g.drawImage(Assets.player, 100, 100, null);
-
+        
+        gameState.draw(g);
+        
         g.drawString(""+AVERAGEFPS, 10, 10 );
 
         //----------final del dibujo---------------
@@ -98,6 +101,7 @@ public class Windows extends JFrame implements Runnable{
     private void init(){
         try {
             Assets.init();
+            gameState = new GameState();
         } catch (IOException ex) {
             Logger.getLogger(Windows.class.getName()).log(Level.SEVERE, null, ex);
         }
