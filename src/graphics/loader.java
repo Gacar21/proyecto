@@ -12,6 +12,7 @@ public class loader {
              return ImageIO.read(loader.class.getResource(path));
         } catch (IOException e){
             e.printStackTrace();
+            
         }
       return null;
     }

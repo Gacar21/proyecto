@@ -2,7 +2,6 @@ package main;
 
 
 import graphics.Assets;
-import static graphics.Assets.init;
 import input.KeyBoard;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -97,6 +96,7 @@ public class Windows extends JFrame implements Runnable{
         g.fillRect(0, 0, WIDTH, HEIGHT);
         
         gameState.draw(g);
+        
         
         g.drawString(""+AVERAGEFPS, 10, 10 );
 
