@@ -13,6 +13,7 @@ public abstract class GameObject {
     public GameObject(Vector2D position, BufferedImage texture){
         this.position = position;
         this.texture = texture;
+        
     }
     
     public abstract void update();

@@ -14,7 +14,15 @@ public class Vector2D {
         x= 0;
         y=0; 
     }
+    
+    public double getMagnitud(){
+        return Math.sqrt(x*x + y*y);
+    }
 
+    public Vector2D setDirection(double angle){
+       return new Vector2D(Math.cos(angle)*getMagnitud(), Math.sin(angle)*getMagnitud()); 
+    }
+    
     public double getX() {
         return x;
     }
