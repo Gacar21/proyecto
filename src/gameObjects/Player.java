@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import main.Windows;
 import math.Vector2D;
+import states.GameState;
 
 public class Player extends MovingObject {
 
@@ -17,12 +18,15 @@ public class Player extends MovingObject {
     private final double  ACC = 0.2;
     private final double DELTAANGLE = 0.1;
     private boolean accelerating =false;
+    private Chronometer fireRate;
+
     
-    
-    public Player(Vector2D position, Vector2D velocity, double maxVel, BufferedImage texture) {
-        super(position, velocity,maxVel, texture);
+    public Player(Vector2D position, Vector2D velocity, double maxVel, BufferedImage texture, GameState gameState) {
+        super(position, velocity,maxVel, texture, gameState);
+        this.gameState = gameState;
         heading = new Vector2D(0,1);
         acceleration = new Vector2D();
+        fireRate = new Chronometer();
         
     }
 
@@ -31,16 +35,32 @@ public class Player extends MovingObject {
     @Override
     public void update() {
         
+        
+        
+        if(KeyBoard.SHOOT && !fireRate.isRunning()){ 
+            gameState.getMovingObjects().add(0, new Laser(
+            getCenter().add(heading.scale(width)),
+            heading,
+            10,
+            angle,
+            Assets.redLaser,
+            gameState
+            ));
+            
+            fireRate.run(Constants.FIRERATE);
+        }
+            
+        
         if(KeyBoard.RIGHT)
-            angle += DELTAANGLE;
+            angle += Constants.DELTAANGLE;
         if(KeyBoard.LEFT)
-            angle -= DELTAANGLE;
+            angle -= Constants.DELTAANGLE;
         if(KeyBoard.UP){
-            acceleration = heading.scale(ACC);
+            acceleration = heading.scale(Constants.ACC);
             accelerating = true;
         }else {
             if(velocity.getMagnitud() != 0)
-                acceleration = (velocity.scale(-1).normalize()).scale(ACC/2);
+                acceleration = (velocity.scale(-1).normalize()).scale(Constants.ACC/2);
                 accelerating = false;
         }
        
@@ -54,16 +74,18 @@ public class Player extends MovingObject {
         position = position.add(velocity);
         
         
-        if(position.getX() > Windows.WIDTH)
+        if(position.getX() > Constants.WIDTH)
             position.setX(0);
-        if(position.getY() > Windows.HEIGHT)
+        if(position.getY() > Constants.HEIGHT)
             position.setY(0);
         
         if(position.getX() < 0)
-            position.setX(Windows.WIDTH);
+            position.setX(Constants.WIDTH);
         if(position.getY() < 0)
-            position.setY(Windows.HEIGHT);
+            position.setY(Constants.HEIGHT);
     
+        fireRate.update();
+        
     }
 
     @Override
@@ -91,4 +113,11 @@ public class Player extends MovingObject {
         g2d.drawImage(Assets.player, at, null);
         
     }
+    
+    public Vector2D getCenter(){
+        return new Vector2D(position.getX() + width/2, position.getY() + height/2);
+    }
+    
+    
+    
 }

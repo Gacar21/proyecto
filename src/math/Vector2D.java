@@ -35,15 +35,19 @@ public class Vector2D {
  
     
     public Vector2D normalize(){
-        return new Vector2D(x/getMagnitud(), y/getMagnitud());
+        
+        double magnitude = getMagnitud();
+        return new Vector2D(x/magnitude, y/magnitude);
     }
     
     public double getMagnitud(){
+        
         return Math.sqrt(x*x + y*y);
     }
 
     public Vector2D setDirection(double angle){
-       return new Vector2D(Math.cos(angle)*getMagnitud(), Math.sin(angle)*getMagnitud()); 
+        double magnitude = getMagnitud();
+       return new Vector2D(Math.cos(angle)*magnitude, Math.sin(angle)*magnitude); 
     }
     
     public double getX() {

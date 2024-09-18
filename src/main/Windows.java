@@ -1,6 +1,7 @@
 package main;
 
 
+import gameObjects.Constants;
 import graphics.Assets;
 import input.KeyBoard;
 import java.awt.Canvas;
@@ -45,7 +46,7 @@ public class Windows extends JFrame implements Runnable{
     public Windows()
     {
         setTitle("Juego espacial");
-        setSize(WIDTH, HEIGHT);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //permite redimenzionar la pantalla setresizable
         setResizable(false);
@@ -56,16 +57,17 @@ public class Windows extends JFrame implements Runnable{
 
         canvas = new Canvas();
         keyBoard = new KeyBoard();
-        canvas.setPreferredSize(new Dimension(WIDTH,HEIGHT));
-        canvas.setMaximumSize(new Dimension(WIDTH,HEIGHT));
-        canvas.setMinimumSize(new Dimension(WIDTH,HEIGHT));
+        canvas.setPreferredSize(new Dimension(Constants.WIDTH,Constants.HEIGHT));
+        canvas.setMaximumSize(new Dimension(Constants.WIDTH,Constants.HEIGHT));
+        canvas.setMinimumSize(new Dimension(Constants.WIDTH,Constants.HEIGHT));
         //permite recibir entradas por parte del teclado
         canvas.setFocusable(true);
          add(canvas);
          
          canvas.addKeyListener(keyBoard);
-          //hace visible la ventana
          setVisible(true);
+          //hace visible la ventana
+       
     }
     public static void main(String[] args) {
         //para visualizarlo
@@ -93,7 +95,7 @@ public class Windows extends JFrame implements Runnable{
         //---------inicio del dibujo------------------
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
         
         gameState.draw(g);
         
